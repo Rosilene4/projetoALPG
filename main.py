@@ -20,11 +20,4 @@ while rodando:
             rodando=False
     screen.blit(bg, (0,0))
 
-    rel_x=x%bg.get_rect().width
-    screen.blit(bg, (rel_x - bg.get_rect().widht,0))
-    if rel_x<1280:
-        screen.blot(bg, (rel_x,0))
-    
-    x-=1
-
     pygame.display.update()
