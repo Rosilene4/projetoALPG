@@ -20,4 +20,11 @@ while rodando:
             rodando=False
     screen.blit(bg, (0,0))
 
+    rel_x = x % bg.get_rect().width
+    screen.blit(bg, (rel_x - bg.get_rect().width,0))
+    if rel_x < 1280:
+        screen.blit(bg, (rel_x, 0))
+    #movimento da tela
+    x-=3
+    
     pygame.display.update()
