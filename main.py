@@ -64,3 +64,45 @@ def respawn_missel():
     respawn_missel_y = posição_nave_y
     velocidade_x_missel = 0
     return [respawn_missel_x, respawn_missel_y, triggered, velocidade_x_missel]
+
+def colisões():
+    global pontos
+    if nave_rect.colliderect(alien_rect) or alien_rect.x == 60:
+        pontos = pontos - 1
+        return True
+    elif missel_rect.colliderect(alien_rect):
+        pontos = pontos + 1
+        return True
+    else:
+        return False
+
+while rodando:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            rodando = False
+
+    scree.blit(bg, (0,0))
+#parte responsável por ficar atualizando a janela e impedir que o jogo feche.
+
+    rel_x = x % bg.get_rect().width
+    scree.blit(bg, (rel_x - bg.get_rect().width, 0)) #criabg
+    if rel_x < 1280:
+        scree.blit(bg, (rel_x, 0))
+
+    #teclas para mover a nave
+    tecla = pygame.key.get_pressed()
+    if tecla[pygame.K_UP] and posição_nave_y > 1:
+        posição_nave_y -= 1
+        if not triggered:
+            posição_y_missel -= 1
+
+    if tecla[pygame.K_DOWN] and posição_nave_y < 665:
+        posição_nave_y += 1
+
+        if not triggered:
+          posição_y_missel += 1
+
+    #comando para o missel ser lançado (atirar)
+    if tecla[pygame.K_SPACE]:
+        triggered = True
+        velocidade_x_missel = 5
