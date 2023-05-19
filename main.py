@@ -106,3 +106,36 @@ while rodando:
     if tecla[pygame.K_SPACE]:
         triggered = True
         velocidade_x_missel = 5
+
+#respawn do alien
+    if posição_alien_x == 50:
+        posição_alien_x = respawn()[0]
+        posição_alien_y = respawn()[1]
+
+    #respawn do missel
+    if posição_x_missel == 1300:
+        posição_x_missel, posição_y_missel, triggered, velocidade_x_missel = respawn_missel()
+
+    if posição_alien_x == 50 or colisões():
+        posição_alien_x = respawn()[0]
+        posição_alien_y = respawn()[1]
+
+    #posição dos racts (objetos)
+    nave_rect.y = posição_nave_y
+    nave_rect.x = posição_nave_x
+
+    missel_rect.x = posição_x_missel
+    missel_rect.y = posição_y_missel
+
+    alien_rect.x = posição_alien_x
+    alien_rect.y = posição_alien_y
+    
+    x-= 2
+    posição_alien_x -= 2 
+    #movimento do alien
+
+    posição_x_missel += velocidade_x_missel
+
+    pygame.draw.rect(scree, (0, 0, 0), nave_rect, 4)
+    pygame.draw.rect(scree, (0, 0, 0), missel_rect, 4)
+    pygame.draw.rect(scree, (0, 0, 0), alien_rect, 4)
