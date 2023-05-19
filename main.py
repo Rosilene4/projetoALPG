@@ -106,8 +106,12 @@ while rodando:
     if tecla[pygame.K_SPACE]:
         triggered = True
         velocidade_x_missel = 5
+        
+    #refras da pontuação
+    if pontos == 0:
+        rodando = False
 
-#respawn do alien
+    #respawn do alien
     if posição_alien_x == 50:
         posição_alien_x = respawn()[0]
         posição_alien_y = respawn()[1]
@@ -139,3 +143,16 @@ while rodando:
     pygame.draw.rect(scree, (0, 0, 0), nave_rect, 4)
     pygame.draw.rect(scree, (0, 0, 0), missel_rect, 4)
     pygame.draw.rect(scree, (0, 0, 0), alien_rect, 4)
+
+    #pontuação na tela
+    score = fonte.render(f'Pontuação: {int(pontos)} ', True, (255, 0, 0))
+    scree.blit(score, (50, 50))
+
+    scree.blit(alien, (posição_alien_x, posição_alien_y))
+    scree.blit(missel, (posição_x_missel, posição_y_missel))
+    scree.blit(nave, (posição_nave_x, posição_nave_y))
+
+    print(pontos)
+
+    pygame.display.update()
+#responsável por mover o fundo e atualizar o mesmo
