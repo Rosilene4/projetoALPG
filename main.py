@@ -27,7 +27,7 @@ nave = pygame.transform.rotate(nave, -90)
 missel = pygame.image.load('figuras/missel.png').convert_alpha()
 missel = pygame.transform.scale(missel, (25, 25))
 missel = pygame.transform.rotate(missel, 0)
-
+##teste
 posição_alien_x = 500
 posição_alien_y = 360
 
