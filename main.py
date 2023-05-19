@@ -1,56 +1,66 @@
-#Importação da biblioteca pygame e iniciação da mesma
 from turtle import Screen
 import pygame
 import random
 from pygame.locals import *
 pygame.init()
+#Importação da biblioteca pygame e iniciação da mesma
 
-#Tamanho da janela (tela) do jogo
 x = 1280
 y = 720
+#Tamanho da janela (tela) do jogo
 
+scree = pygame.display.set_mode((x, y))
+pygame.display.set_caption('INVASORES DO ESPAÇO')
 #Código responsável por exibir a janela e o nome na tela
-screen=pygame.display.set_mode((x,y))
-pygame.display.set_caption("Meu jogo em Python")
 
+bg = pygame.image.load('figuras/space.jpg').convert_alpha()
+bg = pygame.transform.scale(bg, (x, y))
 #carregamento do fundo (cenário) e convertimento para alfa e tamanho da tela
-bg=pygame.image.load('figuras/space.jpg').convert_alpha()
-bg=pygame.transform.scale(bg, (x,y))
 
-alien=pygame.image.load('figuras/alien.png').convert_alpha()
-alien=pygame.transform.scale(alien, (50,50))
+alien = pygame.image.load('figuras/alien.png').convert_alpha()
+alien = pygame.transform.scale(alien, (50, 50))
 
-playerImg = pygame.image.load('figuras/nave.png').convert_alpha()
-playerImg = pygame.transform.scale(playerImg, (50,50))
-playerImg = pygame.transform.rotate(playerImg, -90)
+nave = pygame.image.load('figuras/nave.png').convert_alpha()
+nave = pygame.transform.scale(nave, (50, 50))
+nave = pygame.transform.rotate(nave, -90)
 
-pos_alien_x=500
-pos_alien_y=360
+missel = pygame.image.load('figuras/missel.png').convert_alpha()
+missel = pygame.transform.scale(missel, (25, 25))
+missel = pygame.transform.rotate(missel, 0)
 
-pos_alien_x=200
-pos_alien_y=300
+posição_alien_x = 500
+posição_alien_y = 360
 
-pos_player_x=200
-pos_player_y=300
+posição_nave_x = 200
+posição_nave_y = 300
 
+velocidade_x_missel = 0
+posição_x_missel = 200
+posição_y_missel = 300
 
-rodando=True
+triggered = False
 
-#parte responsável por ficar atualizando a janela e impedir que o jogo feche.
-while rodando:
-    for event in pygame.event.get():
-        if event.type==pygame.QUIT:
-            rodando=False
-    screen.blit(bg, (0,0))
+pontos = 4
 
-    rel_x = x % bg.get_rect().width
-    screen.blit(bg, (rel_x - bg.get_rect().width,0))
-    if rel_x < 1280:
-        screen.blit(bg, (rel_x, 0))
-    #movimento da tela
-    x-=3
+rodando = True
 
-    screen.blit(alien,(pos_alien_y, pos_alien_y))
-    screen.blit(playerImg,(pos_player_x, pos_player_y))
-    
-    pygame.display.update()
+fonte = pygame.font.SysFont('fontes/PixelGameFont.ttf', 50)
+
+#transforma as imagens em objetos
+nave_rect = nave.get_rect()
+alien_rect = alien.get_rect()
+missel_rect = missel.get_rect()
+
+#função pro alien ficar reaparecendo na tela
+def respawn():
+    x = 1350
+    y = random.randint(1, 640)
+    return [x, y]
+
+#função pro missel reaparecer
+def respawn_missel():
+    triggered = False
+    respawn_missel_x = posição_nave_x
+    respawn_missel_y = posição_nave_y
+    velocidade_x_missel = 0
+    return [respawn_missel_x, respawn_missel_y, triggered, velocidade_x_missel]
