@@ -13,6 +13,10 @@ y = 720
 
 pygame.mixer.music.load('musicas/musica_fundo.ogg')
 pygame.mixer.music.play(-1)
+#Musica enquanto o jogo roda
+
+shoot=pygame.mixer.Sound('musicas/laser.wav')
+#Som do disparo da nave
 
 scree = pygame.display.set_mode((x, y))
 pygame.display.set_caption('INVASORES DO ESPAÇO')
@@ -99,6 +103,11 @@ while rodando:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             rodando = False
+        #condição para o som do disparo
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                shoot.play()
+    keys=pygame.key.get_pressed()
 
     scree.blit(bg, (0,0))
 #parte responsável por ficar atualizando a janela e impedir que o jogo feche.
