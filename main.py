@@ -3,11 +3,16 @@ import pygame
 import random
 from pygame.locals import *
 pygame.init()
+import pygame.mixer
+pygame.mixer.init()
 #Importação da biblioteca pygame e iniciação da mesma
 
 x = 1280
 y = 720
 #Tamanho da janela (tela) do jogo
+
+pygame.mixer.music.load('musicas/musica_fundo.ogg')
+pygame.mixer.music.play(-1)
 
 scree = pygame.display.set_mode((x, y))
 pygame.display.set_caption('INVASORES DO ESPAÇO')
@@ -66,12 +71,26 @@ def respawn_missel():
     return [respawn_missel_x, respawn_missel_y, triggered, velocidade_x_missel]
 
 def colisões():
+    #Som dos efeitos
+    #global som_nave_colisao
+    #global som_missil
+    #global som_explosao
+
+    #som_nave_colisao = pygame.mixer.Sound("som_nave_colisao.mp3")
+    #som_missil = pygame.mixer.Sound("som_missil.mp3")
+    #som_explosao = pygame.mixer.Sound("som_explosao.mp3")
+
     global pontos
+    #Se o player principal colidir com a nave inimiga ou a nave passar da tela
+
     if nave_rect.colliderect(alien_rect) or alien_rect.x == 60:
         pontos = pontos - 1
+        #som_nave_colisao.play()
         return True
+    
     elif missel_rect.colliderect(alien_rect):
         pontos = pontos + 1
+        #som_explosao.play()
         return True
     else:
         return False
