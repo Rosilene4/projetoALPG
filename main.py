@@ -11,7 +11,7 @@ x = 1280
 y = 720
 #Tamanho da janela (tela) do jogo
 
-pygame.mixer.music.load('musicas/musica_fundo.ogg')
+pygame.mixer.music.load('musicas/Orbital_som_fundo.mp3')
 pygame.mixer.music.play(-1)
 #Musica enquanto o jogo roda
 
