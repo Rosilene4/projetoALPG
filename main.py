@@ -11,7 +11,7 @@ x = 1280
 y = 720
 #Tamanho da janela (tela) do jogo
 
-pygame.mixer.music.load('musicas/musica_fundo.ogg')
+pygame.mixer.music.load('musicas/Orbital_som_fundo.mp3')
 pygame.mixer.music.play(-1)
 #Musica enquanto o jogo roda
 
@@ -76,11 +76,11 @@ def respawn_missel():
 
 def colisões():
     #Som dos efeitos
-    #global som_nave_colisao
+    global som_nave_colisao
     #global som_missil
     #global som_explosao
 
-    #som_nave_colisao = pygame.mixer.Sound("som_nave_colisao.mp3")
+    som_nave_colisao = pygame.mixer.Sound('musicas/som_de_explosao.wav')
     #som_missil = pygame.mixer.Sound("som_missil.mp3")
     #som_explosao = pygame.mixer.Sound("som_explosao.mp3")
 
@@ -89,7 +89,7 @@ def colisões():
 
     if nave_rect.colliderect(alien_rect) or alien_rect.x == 60:
         pontos = pontos - 1
-        #som_nave_colisao.play()
+        som_nave_colisao.play()
         return True
     
     elif missel_rect.colliderect(alien_rect):
