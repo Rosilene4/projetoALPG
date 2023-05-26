@@ -115,6 +115,8 @@ def colisões():
     
     elif missel_rect.colliderect(alien_rect):
         pontos = pontos + 1
+        if pontos % 10 == 0:
+            velocidade_jogo += 1
         return True
     
     elif missel_rect.colliderect(meteoro_rect):
