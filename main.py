@@ -198,9 +198,9 @@ while rodando:
     meteoro_rect.x = posição_meteoro_x
     meteoro_rect.y = posição_meteoro_y
     
-    x-= 2
-    posição_alien_x -= 2 
-    posição_meteoro_x -= 2
+    x-= velocidade_jogo
+    posição_alien_x -= velocidade_jogo 
+    posição_meteoro_x -= velocidade_jogo
     #movimento do alien
 
     posição_x_missel += velocidade_x_missel
