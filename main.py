@@ -121,8 +121,11 @@ def colisões():
     
     elif missel_rect.colliderect(meteoro_rect):
         pontos = pontos + 1
+        if pontos % 10 == 0:
+            velocidade_jogo += 1
         return True
     else:
+        velocidade_jogo += 0
         return False
         #som_explosao.play()
 
