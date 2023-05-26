@@ -102,6 +102,8 @@ def colisões():
     #som_explosao = pygame.mixer.Sound("som_explosao.mp3")
 
     global pontos
+    
+    global velocidade_jogo
     #Se o player principal colidir com a nave inimiga ou a nave passar da tela
 
     if nave_rect.colliderect(alien_rect) or alien_rect.x == 60:
