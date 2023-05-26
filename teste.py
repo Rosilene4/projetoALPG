@@ -50,8 +50,8 @@ meteoro = pygame.transform.scale(meteoro, (100, 100))
 posição_alien_x = 500
 posição_alien_y = 360
 
-posição_meteoro_x = 800
-posição_meteoro_y = 30
+posição_meteoro_x = 500
+posição_meteoro_y = 360
 
 posição_nave_x = 200
 posição_nave_y = 300
@@ -131,12 +131,7 @@ def colisões():
     
     elif nave_rect.colliderect(meteoro_rect) or meteoro_rect.x == 60:
         pontos = pontos - 1
-        som_nave_colisao.play()
         return True
-    
-    elif nave_rect.colliderect(missil_obstaculo_rect) or missil_obstaculo_rect.x == 60:
-        pontos = pontos - 1
-        return True 
     
     elif missel_rect.colliderect(alien_rect):
         pontos = pontos + 1
@@ -149,7 +144,6 @@ def colisões():
         if pontos % 10 == 0:
             velocidade_jogo += 1
         return True
-    
     else:
         velocidade_jogo += 0
         return False
