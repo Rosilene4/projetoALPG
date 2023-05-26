@@ -58,6 +58,8 @@ triggered = False
 
 pontos = 4
 
+velocidade_jogo = 2
+
 rodando = True
 
 fonte = pygame.font.SysFont('fontes/PixelGameFont.ttf', 50)
