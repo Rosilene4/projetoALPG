@@ -89,6 +89,7 @@ def pausar_jogo():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 paused = False
+# Se apertado a tecla " c " o jogo continua de onde parou
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_c:
                     paused = False
@@ -131,8 +132,8 @@ def colisões():
     #som_explosao = pygame.mixer.Sound("som_explosao.mp3")
 
     global pontos
-    
     global velocidade_jogo
+    
     #Se o player principal colidir com a nave inimiga ou a nave passar da tela
 
     if nave_rect.colliderect(alien_rect) or alien_rect.x == 60:
@@ -186,6 +187,10 @@ while rodando:
 
     #teclas para mover a nave
     tecla = pygame.key.get_pressed()
+    
+    if tecla[pygame.K_p]:
+        pausar_jogo()
+        
     if tecla[pygame.K_UP] and posição_nave_y > 1:
         posição_nave_y -= 1
         if not triggered:
