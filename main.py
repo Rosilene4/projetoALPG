@@ -82,6 +82,17 @@ meteoro_rect = meteoro.get_rect()
 missil_obstaculo_rect = missil_obstaculo.get_rect()
 #foguete_rect = foguete.get_rect()
 
+#função para pausar o jogo
+def pausar_jogo():
+    paused = True
+    while paused:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                paused = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_c:
+                    paused = False
+
 #função pro alien ficar reaparecendo na tela
 def respawn():
     x = 1350
