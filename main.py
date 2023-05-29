@@ -11,14 +11,17 @@ x = 1280
 y = 720
 #Tamanho da janela (tela) do jogo
 
-pygame.mixer.music.load('musicas/Orbital_som_fundo.mp3')
-pygame.mixer.music.play(-1)
+#controle do tempo de disparo da nave inimiga
+cooldown=0
+
+#pygame.mixer.music.load('musicas/Orbital_som_fundo.mp3')
+#pygame.mixer.music.play(-1)
 #Musica enquanto o jogo roda
 
 shoot=pygame.mixer.Sound('musicas/laser.wav')
 #Som do disparo da nave
 
-scree = pygame.display.set_mode((x, y))
+screen = pygame.display.set_mode((x, y))
 pygame.display.set_caption('INVASORES DO ESPAÇO')
 #Código responsável por exibir a janela e o nome na tela
 
@@ -36,16 +39,42 @@ nave = pygame.transform.rotate(nave, -90)
 missel = pygame.image.load('figuras/missel.png').convert_alpha()
 missel = pygame.transform.scale(missel, (25, 25))
 missel = pygame.transform.rotate(missel, 0)
-##teste
+
+missil_obstaculo = pygame.image.load('imagens_novo_nivel/missil_pequeno.png').convert_alpha()
+missil_obstaculo = pygame.transform.scale(missel, (25, 25))
+missil_obstaculo = pygame.transform.rotate(missel, 0)
+
+alien2= pygame.image.load('nave_alien.png').convert_alpha()
+alien2= pygame.transform.scale(alien2, (50,50))
+#########################################
+posição_alien2_x = 13500
+posição_alien2_y = random.randint(1, 640)
+velocidade_alien2_x= 0
+velocidade_alien2_y= 0
+
+#alien2 = pygame.transform.rotate(alien2, 0)
+alien2_speed= 2
+#alien2_width = alien2.get_width(60)
+#alien2_height= alien2.get_height(60)
+posição_alien2_x = 1350
+posição_alien2_y = random.randint(1, 640)
+
+#posição_alien2_x= 600
+#posição_alien2_y= 400
+
 posição_alien_x = 500
 posição_alien_y = 360
 
 posição_nave_x = 200
 posição_nave_y = 300
 
-velocidade_x_missel = 0
+velocidade_x_missel =0
 posição_x_missel = 200
 posição_y_missel = 300
+
+posição_missil_obstaculo_x = posição_alien_x
+posição_missil_obstaculo_y = posição_alien_y
+velocidade_missil_obstaculo_x = 5
 
 triggered = False
 
@@ -59,12 +88,22 @@ fonte = pygame.font.SysFont('fontes/PixelGameFont.ttf', 50)
 nave_rect = nave.get_rect()
 alien_rect = alien.get_rect()
 missel_rect = missel.get_rect()
+missil_obstaculo_rect = missil_obstaculo.get_rect()
+alien2_rect = alien2.get_rect()
 
 #função pro alien ficar reaparecendo na tela
 def respawn():
     x = 1350
     y = random.randint(1, 640)
     return [x, y]
+
+####################################################
+#def respawn_alien2():
+#    respawn_alien2_x= posição_alien2_x
+#    respawn_alien2_y= posição_alien2_y
+#    x= 1350
+#    y= random.randint(1, 640)
+#    return [respawn_alien2_x, respawn_alien2_y, x, y]
 
 #função pro missel reaparecer
 def respawn_missel():
@@ -74,49 +113,65 @@ def respawn_missel():
     velocidade_x_missel = 0
     return [respawn_missel_x, respawn_missel_y, triggered, velocidade_x_missel]
 
+def respawn_missil_obstaculo():
+    triggered = True
+    respawn_missil_obstaculo_x = posição_alien_x
+    respawn_missil_obstaculo_y = posição_alien_y
+    velocidade_missil_obstaculo_x = 0
+    return [respawn_missil_obstaculo_x, respawn_missil_obstaculo_y, triggered]
+
 def colisões():
     #Som dos efeitos
     global som_nave_colisao
     #global som_missil
-    #global som_explosao
+    global som_explosao
 
-    som_nave_colisao = pygame.mixer.Sound('musicas/som_de_explosao.wav')
+    som_nave_colisao = pygame.mixer.Sound('musicas/explosion01.wav')
     #som_missil = pygame.mixer.Sound("som_missil.mp3")
-    #som_explosao = pygame.mixer.Sound("som_explosao.mp3")
+    som_explosao = pygame.mixer.Sound("musicas/explosion04.wav")
 
     global pontos
     #Se o player principal colidir com a nave inimiga ou a nave passar da tela
+    if nave_rect.colliderect(alien2_rect) or alien2_rect.x < 1:
+        pontos= pontos - 1       
+        som_explosao.play()
+        return True
+    
+    elif missel_rect.colliderect(alien2_rect):
+        pontos = pontos + 1
+        som_explosao.play()
+        return True
 
-    if nave_rect.colliderect(alien_rect) or alien_rect.x == 60:
+    elif nave_rect.colliderect(alien_rect) or alien_rect.x < 1:
         pontos = pontos - 1
         som_nave_colisao.play()
         return True
-    
+    ###############################################################################################3355
     elif missel_rect.colliderect(alien_rect):
         pontos = pontos + 1
-        #som_explosao.play()
+        som_explosao.play()
         return True
     else:
-        return False
+        return False    
 
+rodando= True
 while rodando:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+    for events in pygame.event.get():
+        if events.type == pygame.QUIT:
             rodando = False
-        #condição para o som do disparo
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                shoot.play()
-    keys=pygame.key.get_pressed()
-
-    scree.blit(bg, (0,0))
-#parte responsável por ficar atualizando a janela e impedir que o jogo feche.
-
+        screen.blit(bg, (0,0))
+    
+    #parte responsável por ficar atualizando a janela e impedir que o jogo feche.
     rel_x = x % bg.get_rect().width
-    scree.blit(bg, (rel_x - bg.get_rect().width, 0)) #criabg
+    screen.blit(bg, (rel_x - bg.get_rect().width, 0)) #criabg
     if rel_x < 1280:
-        scree.blit(bg, (rel_x, 0))
+        screen.blit(bg, (rel_x, 0))
 
+    elif events.type == pygame.KEYDOWN:  #condição para o som do disparo
+        if events.key == pygame.K_SPACE:
+            shoot.play()
+    keys=pygame.key.get_pressed()
+    
     #teclas para mover a nave
     tecla = pygame.key.get_pressed()
     if tecla[pygame.K_UP] and posição_nave_y > 1:
@@ -144,6 +199,25 @@ while rodando:
         posição_alien_x = respawn()[0]
         posição_alien_y = respawn()[1]
 
+    # Alien 2
+    if posição_alien2_x == 50:
+        posição_alien2_x= 1350
+        posição_alien2_y= random.randint(1, 640)
+    posição_alien2_x -=3
+
+    alien2_rect= screen.blit(alien2, (posição_alien2_x, posição_alien2_y))
+    
+    screen.blit(alien, (posição_alien_x, posição_alien_y))
+    screen.blit(alien2, (posição_alien2_x, posição_alien2_y))
+
+    #elif posição_alien2_x == 50:
+    #    posição_alien2_x = respawn_alien2()[0]
+    #    posição_alien2_y = respawn_alien2()[1]
+
+    #respawn do alien2
+    
+        ##########################################################################
+
     #respawn do missel
     if posição_x_missel == 1300:
         posição_x_missel, posição_y_missel, triggered, velocidade_x_missel = respawn_missel()
@@ -152,6 +226,55 @@ while rodando:
         posição_alien_x = respawn()[0]
         posição_alien_y = respawn()[1]
 
+    #if posição_alien2_x == 50 or colisões():
+    #    posição_alien2_x = respawn_alien2()[0]
+    #    posição_alien2_y = respawn_alien2()[0]
+    
+    alien2_rect.x= posição_alien2_x
+    alien2_rect.y= posição_alien2_y
+
+    posição_alien2_x -= 2
+
+    #desenhar astroide na tela
+    #screen.blit(asteroide, asteroide_rect)
+
+    #desenhar foguete
+    screen.blit(alien2, alien2_rect)
+
+#Controle do tempo de espera entre os disparos da nave inimiga
+    if cooldown <=0:
+        missil_obstaculo_x= posição_alien_x
+        missil_obstaculo_y= posição_alien_y
+
+        #atualização do cooldwon para o tempo de espera
+        cooldown=60
+    else:
+        cooldown -=1
+
+    #mover e desenhar o missel da nave inimiga
+    if missil_obstaculo_x is not None and missil_obstaculo_y is not None:
+        missil_obstaculo_x -=15 #mover míssil para a esquerda
+        screen.blit(missil_obstaculo, (missil_obstaculo_x, missil_obstaculo_y)) #Desenha missil na tela
+        
+        if triggered:
+            posição_missil_obstaculo_x -= velocidade_missil_obstaculo_x
+
+        #verificar se missil saiu da tela
+        if missil_obstaculo_x <0:
+            missil_obstaculo_x = None
+            missil_obstaculo_y = None
+
+        #verificar colisão do missil com a nave do jogador
+        #if nave_rect.colliderect(pygame.Rect(missil_obstaculo_x, missil_obstaculo_y, missil_obstaculo.get_width(), missil_obstaculo.get_height())):
+         #   pontos = pontos - 1
+         #   som_nave_colisao.play()
+
+       # def mostrar_game_over(pontos):
+        #    fonte = pygame.font.SysFont('Arial', 36)
+        #    texto = fonte.render('Game Over! Pontuação: ' + str(pontos), True, (255, 255, 255))
+        #    posicao_texto = (x // 2 - texto.get_width() // 2, y // 2 - texto.get_height() // 2)
+        #    x.blit(texto, posicao_texto)        
+    
     #posição dos racts (objetos)
     nave_rect.y = posição_nave_y
     nave_rect.x = posição_nave_x
@@ -161,6 +284,9 @@ while rodando:
 
     alien_rect.x = posição_alien_x
     alien_rect.y = posição_alien_y
+
+    missil_obstaculo_rect.x = posição_alien_x
+    missil_obstaculo_rect.y = posição_alien_y
     
     x-= 2
     posição_alien_x -= 2 
@@ -168,19 +294,19 @@ while rodando:
 
     posição_x_missel += velocidade_x_missel
 
-    pygame.draw.rect(scree, (0, 0, 0), nave_rect, 4)
-    pygame.draw.rect(scree, (0, 0, 0), missel_rect, 4)
-    pygame.draw.rect(scree, (0, 0, 0), alien_rect, 4)
+    pygame.draw.rect(screen, (0, 0, 0), nave_rect, 4)
+    pygame.draw.rect(screen, (0, 0, 0), missel_rect, 4)
+    pygame.draw.rect(screen, (0, 0, 0), alien_rect, 4)
+    pygame.draw.rect(screen, (0, 0, 0), alien2_rect, 4)
 
     #pontuação na tela
-    score = fonte.render(f'Pontuação: {int(pontos)} ', True, (255, 0, 0))
-    scree.blit(score, (50, 50))
+    score = fonte.render(f'Pontuação: {int(pontos)} ', True, (100, 0, 0))
+    screen.blit(score, (50, 50))
 
-    scree.blit(alien, (posição_alien_x, posição_alien_y))
-    scree.blit(missel, (posição_x_missel, posição_y_missel))
-    scree.blit(nave, (posição_nave_x, posição_nave_y))
-
-    print(pontos)
+    screen.blit(alien, (posição_alien_x, posição_alien_y))
+    screen.blit(missel, (posição_x_missel, posição_y_missel))
+    screen.blit(nave, (posição_nave_x, posição_nave_y))
+    #scree.blit(missil_obstaculo ())
 
     pygame.display.update()
 #responsável por mover o fundo e atualizar o mesmo
