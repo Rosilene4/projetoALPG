@@ -91,6 +91,17 @@ missel_rect = missel.get_rect()
 missil_obstaculo_rect = missil_obstaculo.get_rect()
 alien2_rect = alien2.get_rect()
 
+def pausar_jogo():
+    paused = True
+    while paused:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                paused = False
+# Se apertado a tecla " c " o jogo continua de onde parou
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_c:
+                    paused = False
+
 #função pro alien ficar reaparecendo na tela
 def respawn():
     x = 1350
@@ -174,6 +185,9 @@ while rodando:
     
     #teclas para mover a nave
     tecla = pygame.key.get_pressed()
+
+    if tecla[pygame.K_p]:
+        pausar_jogo()
     if tecla[pygame.K_UP] and posição_nave_y > 1:
         posição_nave_y -= 1
         if not triggered:
