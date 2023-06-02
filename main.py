@@ -46,6 +46,10 @@ missil_obstaculo = pygame.transform.rotate(missel, 0)
 
 alien2= pygame.image.load('nave_alien.png').convert_alpha()
 alien2= pygame.transform.scale(alien2, (50,50))
+
+explosão = pygame.image.load('explosion.png').convert_alpha()
+explosão = pygame.transform.scale(explosão, (100, 100))
+
 #########################################
 posição_alien2_x = 13500
 posição_alien2_y = random.randint(1, 640)
@@ -62,7 +66,7 @@ posição_alien2_y = random.randint(1, 640)
 #posição_alien2_x= 600
 #posição_alien2_y= 400
 
-posição_alien_x = 500
+posição_alien_x = 500 
 posição_alien_y = 360
 
 posição_nave_x = 200
@@ -71,6 +75,9 @@ posição_nave_y = 300
 velocidade_x_missel =0
 posição_x_missel = 200
 posição_y_missel = 300
+
+#posição_explosão_x = 500
+#posição_explosão_y = 360
 
 posição_missil_obstaculo_x = posição_alien_x
 posição_missil_obstaculo_y = posição_alien_y
@@ -146,22 +153,27 @@ def colisões():
     if nave_rect.colliderect(alien2_rect) or alien2_rect.x < 1:
         pontos= pontos - 1       
         som_explosao.play()
+        screen.blit(explosão, (posição_alien2_x, posição_alien2_y))
         return True
     
     elif missel_rect.colliderect(alien2_rect):
         pontos = pontos + 1
         som_explosao.play()
+        screen.blit(explosão, (posição_alien2_x, posição_alien2_y))
+        #screen.blit(explosão, (posição_alien_x, posição_alien_y))
         return True
 
     elif nave_rect.colliderect(alien_rect) or alien_rect.x < 1:
         pontos = pontos - 1
         som_nave_colisao.play()
+        screen.blit(explosão, (posição_alien_x, posição_alien_y))
         return True
     ###############################################################################################3355
     elif missel_rect.colliderect(alien_rect):
         pontos = pontos + 1
         som_explosao.play()
-        return True
+        screen.blit(explosão, (posição_alien_x  , posição_alien_y))
+        return True 
     else:
         return False    
 
@@ -320,6 +332,7 @@ while rodando:
     screen.blit(alien, (posição_alien_x, posição_alien_y))
     screen.blit(missel, (posição_x_missel, posição_y_missel))
     screen.blit(nave, (posição_nave_x, posição_nave_y))
+    #screen.blit(explosão, (posição_explosão_x, posição_explosão_y) )
     #scree.blit(missil_obstaculo ())
 
     pygame.display.update()
