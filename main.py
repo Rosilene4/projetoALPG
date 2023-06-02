@@ -47,8 +47,6 @@ missil_obstaculo = pygame.transform.rotate(missel, 0)
 
 alien2= pygame.image.load('imagens_novo_nivel/Meu projeto.png').convert_alpha()
 alien2= pygame.transform.scale(alien2, (50,50))
-explosão = pygame.image.load('explosion.png').convert_alpha()
-explosão = pygame.transform.scale(explosão, (100, 100))
 #########################################
 posição_alien2_x = 13500
 posição_alien2_y = random.randint(1, 640)
@@ -357,8 +355,3 @@ while rodando:
 
     pygame.display.update()
 #responsável por mover o fundo e atualizar o mesmo
-
-
-
-
-
