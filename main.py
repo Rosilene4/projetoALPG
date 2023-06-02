@@ -14,8 +14,9 @@ y = 720
 #controle do tempo de disparo da nave inimiga
 cooldown=0
 
-#pygame.mixer.music.load('musicas/Orbital_som_fundo.mp3')
-#pygame.mixer.music.play(-1)
+
+pygame.mixer.music.load('musicas/Orbital_som_fundo.mp3')
+pygame.mixer.music.play(-1)
 #Musica enquanto o jogo roda
 
 shoot=pygame.mixer.Sound('musicas/laser.wav')
@@ -44,8 +45,10 @@ missil_obstaculo = pygame.image.load('imagens_novo_nivel/missil_pequeno.png').co
 missil_obstaculo = pygame.transform.scale(missel, (25, 25))
 missil_obstaculo = pygame.transform.rotate(missel, 0)
 
-alien2= pygame.image.load('nave_alien.png').convert_alpha()
+alien2= pygame.image.load('imagens_novo_nivel/Meu projeto.png').convert_alpha()
 alien2= pygame.transform.scale(alien2, (50,50))
+explosão = pygame.image.load('explosion.png').convert_alpha()
+explosão = pygame.transform.scale(explosão, (100, 100))
 #########################################
 posição_alien2_x = 13500
 posição_alien2_y = random.randint(1, 640)
@@ -79,6 +82,7 @@ velocidade_missil_obstaculo_x = 5
 triggered = False
 
 pontos = 4
+velocidade_pontos = 2
 
 rodando = True
 
@@ -90,6 +94,12 @@ alien_rect = alien.get_rect()
 missel_rect = missel.get_rect()
 missil_obstaculo_rect = missil_obstaculo.get_rect()
 alien2_rect = alien2.get_rect()
+
+def exibe_mensagem(msg, tamanho, cor):
+    fonte= pygame.font.SysFont('comicsansms', tamanho, True, False)
+    mensagem = f'{msg}'
+    texto_formatado = fonte.render(mensagem, True, cor)
+    return texto_formatado
 
 def pausar_jogo():
     paused = True
@@ -137,34 +147,44 @@ def colisões():
     #global som_missil
     global som_explosao
 
+    global velocidade_pontos
+
     som_nave_colisao = pygame.mixer.Sound('musicas/explosion01.wav')
     #som_missil = pygame.mixer.Sound("som_missil.mp3")
     som_explosao = pygame.mixer.Sound("musicas/explosion04.wav")
 
     global pontos
     #Se o player principal colidir com a nave inimiga ou a nave passar da tela
+
+    if nave_rect.colliderect(alien_rect) or alien_rect.x == 60:
+        pontos = pontos - 1
+        som_nave_colisao.play()
+        return True
+
+    elif missel_rect.colliderect(alien_rect):
+        pontos = pontos + 1
+        som_explosao.play()
+        if pontos % 10 == 0:
+            velocidade_pontos +1
+        return True
+    
     if nave_rect.colliderect(alien2_rect) or alien2_rect.x < 1:
         pontos= pontos - 1       
         som_explosao.play()
         return True
     
-    elif missel_rect.colliderect(alien2_rect):
+    if missel_rect.colliderect(alien2_rect):
         pontos = pontos + 1
         som_explosao.play()
         return True
-
-    elif nave_rect.colliderect(alien_rect) or alien_rect.x < 1:
-        pontos = pontos - 1
-        som_nave_colisao.play()
-        return True
-    ###############################################################################################3355
-    elif missel_rect.colliderect(alien_rect):
-        pontos = pontos + 1
-        som_explosao.play()
-        return True
+    
+    if pontos >= 10:
+        velocidade_pontos=4
     else:
-        return False    
-
+        velocidade_pontos += 0
+        return False   
+ 
+game_over_exibindo= False
 rodando= True
 while rodando:
     for events in pygame.event.get():
@@ -204,9 +224,16 @@ while rodando:
         triggered = True
         velocidade_x_missel = 5
         
-    #refras da pontuação
+    #refras da pontuação / exibir game over
     if pontos == 0:
+        game_over = exibe_mensagem("GAME OVER" , 40, (255, 255, 255))
+        screen.blit(game_over, (544 ,300) )
+        pygame.display.update()
+        game_over_exibindo= True
+        pygame.time.wait(2000)
         rodando = False
+        pausar_jogo()
+
 
     #respawn do alien
     if posição_alien_x == 50:
@@ -230,7 +257,6 @@ while rodando:
 
     #respawn do alien2
     
-        ##########################################################################
 
     #respawn do missel
     if posição_x_missel == 1300:
@@ -277,6 +303,7 @@ while rodando:
         if missil_obstaculo_x <0:
             missil_obstaculo_x = None
             missil_obstaculo_y = None
+        
 
         #verificar colisão do missil com a nave do jogador
         #if nave_rect.colliderect(pygame.Rect(missil_obstaculo_x, missil_obstaculo_y, missil_obstaculo.get_width(), missil_obstaculo.get_height())):
@@ -288,7 +315,13 @@ while rodando:
         #    texto = fonte.render('Game Over! Pontuação: ' + str(pontos), True, (255, 255, 255))
         #    posicao_texto = (x // 2 - texto.get_width() // 2, y // 2 - texto.get_height() // 2)
         #    x.blit(texto, posicao_texto)        
-    
+        if pontos>=15:
+            nave=pygame.image.load('navebranca.png').convert_alpha()
+            nave = pygame.transform.scale(nave, (90, 90))
+            screen.blit(nave, (posição_nave_x, posição_nave_y))
+            velocidade_pontos=4
+
+
     #posição dos racts (objetos)
     nave_rect.y = posição_nave_y
     nave_rect.x = posição_nave_x
@@ -302,8 +335,8 @@ while rodando:
     missil_obstaculo_rect.x = posição_alien_x
     missil_obstaculo_rect.y = posição_alien_y
     
-    x-= 2
-    posição_alien_x -= 2 
+    x-= velocidade_pontos
+    posição_alien_x -= velocidade_pontos
     #movimento do alien
 
     posição_x_missel += velocidade_x_missel
@@ -324,3 +357,8 @@ while rodando:
 
     pygame.display.update()
 #responsável por mover o fundo e atualizar o mesmo
+
+
+
+
+
