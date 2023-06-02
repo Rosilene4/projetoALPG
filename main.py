@@ -47,6 +47,10 @@ missil_obstaculo = pygame.transform.rotate(missel, 0)
 
 alien2= pygame.image.load('imagens_novo_nivel/Meu projeto.png').convert_alpha()
 alien2= pygame.transform.scale(alien2, (50,50))
+
+explosão = pygame.image.load('explosion.png').convert_alpha()
+explosão = pygame.transform.scale(explosão, (100, 100))
+
 #########################################
 posição_alien2_x = 13500
 posição_alien2_y = random.randint(1, 640)
@@ -157,6 +161,7 @@ def colisões():
     if nave_rect.colliderect(alien_rect) or alien_rect.x == 60:
         pontos = pontos - 1
         som_nave_colisao.play()
+        screen.blit(explosão, (posição_alien_x, posição_alien_y))
         return True
 
     elif missel_rect.colliderect(alien_rect):
@@ -164,16 +169,19 @@ def colisões():
         som_explosao.play()
         if pontos % 10 == 0:
             velocidade_pontos +1
+        screen.blit(explosão, (posição_alien_x, posição_alien_y))
         return True
     
     if nave_rect.colliderect(alien2_rect) or alien2_rect.x < 1:
         pontos= pontos - 1       
         som_explosao.play()
+        screen.blit(explosão, (posição_alien2_x, posição_alien2_y))
         return True
     
     if missel_rect.colliderect(alien2_rect):
         pontos = pontos + 1
         som_explosao.play()
+        screen.blit(explosão, (posição_alien2_x, posição_alien2_y))
         return True
     
     if pontos >= 10:
