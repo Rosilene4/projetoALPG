@@ -47,6 +47,9 @@ missil_obstaculo = pygame.transform.rotate(missel, 0)
 alien2= pygame.image.load('asteroid_fogo.png').convert_alpha()
 alien2= pygame.transform.scale(alien2, (100,100))
 
+meteoro_fogo = pygame.image.load('fogo.png').convert_alpha()
+meteoro_fogo = pygame.transform.scale(meteoro_fogo, (100, 100))
+
 posição_alien2_x = 13500
 posição_alien2_y = random.randint(1, 640)
 
@@ -59,6 +62,10 @@ posição_alien2_y = random.randint(1, 640)
 
 posição_alien_x = 500
 posição_alien_y = 360
+
+meteoro_fogo_speed = 2
+posição_meteoro_fogo_x = 1350
+posição_meteoro_fogo_y = random.randint(1, 640)
 
 posição_nave_x = 200
 posição_nave_y = 300
@@ -86,6 +93,7 @@ alien_rect = alien.get_rect()
 missel_rect = missel.get_rect()
 missil_obstaculo_rect = missil_obstaculo.get_rect()
 alien2_rect = alien2.get_rect()
+meteoro_fogo_rect = meteoro_fogo.get_rect()
 
 def reiniciar_jogo():
     global posição_alien2_x, posição_alien2_y, velocidade_alien2_x, velocidade_alien2_y
@@ -187,6 +195,11 @@ def colisões():
         som_explosao.play()
         return True
     
+    if nave_rect.colliderect(meteoro_fogo_rect) or meteoro_fogo_rect.x == 60:
+        pontos -=1      
+        som_explosao.play()
+        return True
+    
     if missel_rect.colliderect(alien_rect):
         pontos +=1
         som_explosao.play()
@@ -260,7 +273,8 @@ while rodando:
         game_over_exibindo= True
         pygame.time.wait(2000)
         rodando = False
-        pausar_jogo            
+        pausar_jogo()
+                    
 
 
     #respawn do alien
@@ -274,7 +288,13 @@ while rodando:
         posição_alien2_y= random.randint(1, 640)
     posição_alien2_x -=3
 
+    if posição_meteoro_fogo_x == 50:
+        posição_meteoro_fogo_x = 1350
+        posição_meteoro_fogo_y = random.randint(1, 640)
+    posição_meteoro_fogo_x -=3
+
     alien2_rect= screen.blit(alien2, (posição_alien2_x, posição_alien2_y))
+    meteoro_fogo_rect = screen.blit(meteoro_fogo, (posição_meteoro_fogo_x, posição_meteoro_fogo_y))
     
     screen.blit(alien, (posição_alien_x, posição_alien_y))
     screen.blit(alien2, (posição_alien2_x, posição_alien2_y))
@@ -290,7 +310,11 @@ while rodando:
     alien2_rect.x= posição_alien2_x
     alien2_rect.y= posição_alien2_y
 
+    meteoro_fogo_rect.x = posição_meteoro_fogo_x
+    meteoro_fogo_rect.y = posição_meteoro_fogo_y
+
     posição_alien2_x -= 2
+    posição_meteoro_fogo_x -= 1
 
     #desenhar foguete
     screen.blit(alien2, alien2_rect)
@@ -352,6 +376,7 @@ while rodando:
     screen.blit(missel, (posição_x_missel, posição_y_missel))
     screen.blit(nave, (posição_nave_x, posição_nave_y))
     screen.blit(alien2, (posição_alien2_x, posição_alien2_y))
+    screen.blit(meteoro_fogo, (posição_meteoro_fogo_x, posição_meteoro_fogo_y))
 
     pygame.display.update()
 #responsável por mover o fundo e atualizar o mesmo
