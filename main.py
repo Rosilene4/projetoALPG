@@ -86,7 +86,7 @@ alien_rect = alien.get_rect()
 missel_rect = missel.get_rect()
 missil_obstaculo_rect = missil_obstaculo.get_rect()
 alien2_rect = alien2.get_rect()
-###################################################################################
+
 def reiniciar_jogo():
     global posição_alien2_x, posição_alien2_y, velocidade_alien2_x, velocidade_alien2_y
     global alien2_speed, posição_alien_x, posição_alien_y, posição_nave_x, posição_nave_y
@@ -230,9 +230,8 @@ while rodando:
     
     #teclas para mover a nave
     tecla = pygame.key.get_pressed()
-    555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
     #reinicia o jogo se apertar na tecla espace
-    if tecla[pygame.K_SPACE]:
+    if tecla[pygame.K_a]:
         reiniciar_jogo()
 
     if tecla[pygame.K_p]:
@@ -261,7 +260,7 @@ while rodando:
         game_over_exibindo= True
         pygame.time.wait(2000)
         rodando = False
-        pausar_jogo()            
+        pausar_jogo            
 
 
     #respawn do alien
