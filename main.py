@@ -50,6 +50,9 @@ alien2= pygame.transform.scale(alien2, (100,100))
 meteoro_fogo = pygame.image.load('fogo.png').convert_alpha()
 meteoro_fogo = pygame.transform.scale(meteoro_fogo, (100, 100))
 
+explosão = pygame.image.load('explosion.png').convert_alpha()
+explosão = pygame.transform.scale(explosão, (100, 100))
+
 posição_alien2_x = 13500
 posição_alien2_y = random.randint(1, 640)
 
@@ -188,27 +191,32 @@ def colisões():
     if nave_rect.colliderect(alien_rect) or alien_rect.x == 60:
         pontos -=1
         som_nave_colisao.play()
+        screen.blit(explosão, (posição_alien_x, posição_alien_y))
         return True
     
     if nave_rect.colliderect(alien2_rect) or alien2_rect.x == 60:
         pontos -=1      
         som_explosao.play()
+        screen.blit(explosão, (posição_alien2_x, posição_alien2_y))
         return True
     
     if nave_rect.colliderect(meteoro_fogo_rect) or meteoro_fogo_rect.x == 60:
         pontos -=1      
         som_explosao.play()
+        screen.blit(explosão, (posição_meteoro_fogo_x, posição_meteoro_fogo_y))
         return True
     
     if missel_rect.colliderect(alien_rect):
         pontos +=1
         som_explosao.play()
+        screen.blit(explosão, (posição_alien_x, posição_alien_y))
         if pontos % 10 == 0:
             velocidade_pontos +1
         return True
     if missil_obstaculo_rect.colliderect(nave_rect):
         pontos -=1
         som_explosao.play()
+        screen.blit(explosão, (posição_nave_x, posição_nave_y))
         return True
     
     #if missel_rect.colliderect(alien2_rect):
