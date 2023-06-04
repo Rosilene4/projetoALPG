@@ -40,9 +40,9 @@ missel = pygame.image.load('figuras/missel.png').convert_alpha()
 missel = pygame.transform.scale(missel, (50, 50))
 missel = pygame.transform.rotate(missel, 0)
 
-missil_obstaculo = pygame.image.load('imagens_novo_nivel/missil_pequeno.png').convert_alpha()
+'''missil_obstaculo = pygame.image.load('imagens_novo_nivel/missil_pequeno.png').convert_alpha()
 missil_obstaculo = pygame.transform.scale(missel, (50, 50))
-missil_obstaculo = pygame.transform.rotate(missel, 0)
+missil_obstaculo = pygame.transform.rotate(missel, 0)'''
 
 alien2= pygame.image.load('asteroid_fogo.png').convert_alpha()
 alien2= pygame.transform.scale(alien2, (100,100))
@@ -77,9 +77,9 @@ velocidade_x_missel =0
 posição_x_missel = 200
 posição_y_missel = 300
 
-posição_missil_obstaculo_x = posição_alien_x
+'''posição_missil_obstaculo_x = posição_alien_x
 posição_missil_obstaculo_y = posição_alien_y
-velocidade_missil_obstaculo_x = 2
+velocidade_missil_obstaculo_x = 2'''
 
 triggered = False
 
@@ -94,7 +94,7 @@ fonte = pygame.font.SysFont('fontes/PixelGameFont.ttf', 50)
 nave_rect = nave.get_rect()
 alien_rect = alien.get_rect()
 missel_rect = missel.get_rect()
-missil_obstaculo_rect = missil_obstaculo.get_rect()
+#missil_obstaculo_rect = missil_obstaculo.get_rect()
 alien2_rect = alien2.get_rect()
 meteoro_fogo_rect = meteoro_fogo.get_rect()
 
@@ -125,9 +125,9 @@ def reiniciar_jogo():
     posição_x_missel = 200
     posição_y_missel = 300
     
-    posição_missil_obstaculo_x = posição_alien_x
+    '''posição_missil_obstaculo_x = posição_alien_x
     posição_missil_obstaculo_y = posição_alien_y
-    velocidade_missil_obstaculo_x = 2
+    velocidade_missil_obstaculo_x = 2'''
     
     triggered = False
     pontos = 4
@@ -213,11 +213,11 @@ def colisões():
         if pontos % 10 == 0:
             velocidade_pontos +1
         return True
-    if missil_obstaculo_rect.colliderect(nave_rect):
+    '''if missil_obstaculo_rect.colliderect(nave_rect):
         pontos -=1
         som_explosao.play()
         screen.blit(explosão, (posição_nave_x, posição_nave_y))
-        return True
+        return True'''
     
     #if missel_rect.colliderect(alien2_rect):
     #    pontos = pontos + 1
@@ -329,7 +329,7 @@ while rodando:
     screen.blit(meteoro_fogo, meteoro_fogo_rect)
 
 #Controle do tempo de espera entre os disparos da nave inimiga
-    if cooldown <=0:
+    '''if cooldown <=0:
         missil_obstaculo_x= posição_alien_x
         missil_obstaculo_y= posição_alien_y
 
@@ -349,7 +349,7 @@ while rodando:
         #verificar se missil saiu da tela
         if missil_obstaculo_x <0:
             missil_obstaculo_x = None
-            missil_obstaculo_y = None
+            missil_obstaculo_y = None'''
              
         #if pontos>=15:
         #    nave=pygame.image.load('nave_pequena.png').convert_alpha()
@@ -368,8 +368,8 @@ while rodando:
     alien_rect.x = posição_alien_x
     alien_rect.y = posição_alien_y
 
-    missil_obstaculo_rect.x = posição_alien_x
-    missil_obstaculo_rect.y = posição_alien_y
+    #missil_obstaculo_rect.x = posição_alien_x
+    #missil_obstaculo_rect.y = posição_alien_y
     
     x-= velocidade_pontos
     posição_alien_x -= velocidade_pontos
