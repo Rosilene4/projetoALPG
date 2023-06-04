@@ -189,6 +189,7 @@ def respawn_missil_obstaculo():
  
 game_over_exibindo= False
 rodando= True
+#teste
 
 #Parte responsavel por todo o código principal do jogo, ou seja, alma do game
 def jogo_principal():
