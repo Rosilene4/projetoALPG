@@ -40,9 +40,9 @@ missel = pygame.image.load('figuras/missel.png').convert_alpha()
 missel = pygame.transform.scale(missel, (50, 50))
 missel = pygame.transform.rotate(missel, 0)
 
-'''missil_obstaculo = pygame.image.load('imagens_novo_nivel/missil_pequeno.png').convert_alpha()
-missil_obstaculo = pygame.transform.scale(missel, (50, 50))
-missil_obstaculo = pygame.transform.rotate(missel, 0)'''
+#missil_obstaculo = pygame.image.load('imagens_novo_nivel/missil_pequeno.png').convert_alpha()
+#missil_obstaculo = pygame.transform.scale(missel, (50, 50))
+#missil_obstaculo = pygame.transform.rotate(missel, 0)
 
 alien2= pygame.image.load('asteroid_fogo.png').convert_alpha()
 alien2= pygame.transform.scale(alien2, (100,100))
@@ -74,9 +74,9 @@ velocidade_x_missel =0
 posição_x_missel = 200
 posição_y_missel = 300
 
-'''posição_missil_obstaculo_x = posição_alien_x
-posição_missil_obstaculo_y = posição_alien_y
-velocidade_missil_obstaculo_x = 2'''
+#posição_missil_obstaculo_x = posição_alien_x
+#posição_missil_obstaculo_y = posição_alien_y
+#velocidade_missil_obstaculo_x = 2
 
 triggered = False
 
@@ -99,7 +99,7 @@ def reiniciar_jogo():
     global posição_alien2_x, posição_alien2_y, velocidade_alien2_x, velocidade_alien2_y
     global alien2_speed, posição_alien_x, posição_alien_y, posição_nave_x, posição_nave_y
     global velocidade_x_missel, posição_x_missel, posição_y_missel
-    global posição_missil_obstaculo_x, posição_missil_obstaculo_y, velocidade_missil_obstaculo_x
+    #global posição_missil_obstaculo_x, posição_missil_obstaculo_y, velocidade_missil_obstaculo_x
     global triggered, pontos, velocidade_pontos, rodando
     global meteoro_fogo_speed, posição_meteoro_fogo_x, posição_meteoro_fogo_y, velocidade_meteoro_fogo_x, velocidade_meteoro_fogo_y
 
@@ -130,9 +130,9 @@ def reiniciar_jogo():
     posição_x_missel = 200
     posição_y_missel = 300
     
-    '''posição_missil_obstaculo_x = posição_alien_x
-    posição_missil_obstaculo_y = posição_alien_y
-    velocidade_missil_obstaculo_x = 2'''
+    #posição_missil_obstaculo_x = posição_alien_x
+    #posição_missil_obstaculo_y = posição_alien_y
+    #velocidade_missil_obstaculo_x = 2
     
     triggered = False
     pontos = 4
@@ -218,11 +218,11 @@ def colisões():
         if pontos % 10 == 0:
             velocidade_pontos +1
         return True
-    '''if missil_obstaculo_rect.colliderect(nave_rect):
-        pontos -=1
-        som_explosao.play()
-        screen.blit(explosão, (posição_nave_x, posição_nave_y))
-        return True'''
+    #if missil_obstaculo_rect.colliderect(nave_rect):
+    #    pontos -=1
+    #    som_explosao.play()
+    #    screen.blit(explosão, (posição_nave_x, posição_nave_y))
+    #    return True
     
     #if missel_rect.colliderect(alien2_rect):
     #    pontos = pontos + 1
@@ -287,7 +287,7 @@ while rodando:
         game_over_exibindo= True
         pygame.time.wait(2000)
         rodando = False
-        pausar_jogo()
+        reiniciar_jogo()
 
     
 
