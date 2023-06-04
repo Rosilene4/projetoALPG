@@ -224,7 +224,6 @@ def jogo_principal():
     velocidade_x_missel =0
     posição_x_missel = 200
     posição_y_missel = 300
-    
 
     def colisões():
         #Som dos efeitos
