@@ -83,7 +83,7 @@ velocidade_missil_obstaculo_x = 2
 
 triggered = False
 
-pontos = 4
+pontos = 6
 velocidade_pontos = 2
 
 rodando = True
@@ -326,6 +326,7 @@ while rodando:
 
     #desenhar foguete
     screen.blit(alien2, alien2_rect)
+    screen.blit(meteoro_fogo, meteoro_fogo_rect)
 
 #Controle do tempo de espera entre os disparos da nave inimiga
     if cooldown <=0:
@@ -377,7 +378,7 @@ while rodando:
     posição_x_missel += velocidade_x_missel
 
     #pontuação na tela
-    score = fonte.render(f'Pontuação: {int(pontos)} ', True, (100, 0, 0))
+    score = fonte.render(f'PONTUAÇÃO : {int(pontos)} ', True, (255, 255, 255))
     screen.blit(score, (50, 50))
 
     screen.blit(alien, (posição_alien_x, posição_alien_y))
