@@ -53,9 +53,6 @@ meteoro_fogo = pygame.transform.scale(meteoro_fogo, (100, 100))
 explosão = pygame.image.load('explosion.png').convert_alpha()
 explosão = pygame.transform.scale(explosão, (100, 100))
 
-posição_alien2_x = 13500
-posição_alien2_y = random.randint(1, 640)
-
 velocidade_alien2_x= 0
 velocidade_alien2_y= 0
 
@@ -104,6 +101,7 @@ def reiniciar_jogo():
     global velocidade_x_missel, posição_x_missel, posição_y_missel
     global posição_missil_obstaculo_x, posição_missil_obstaculo_y, velocidade_missil_obstaculo_x
     global triggered, pontos, velocidade_pontos, rodando
+    global meteoro_fogo_speed, posição_meteoro_fogo_x, posição_meteoro_fogo_y, velocidade_meteoro_fogo_x, velocidade_meteoro_fogo_y
 
     posição_alien2_x = 13500
     posição_alien2_y = random.randint(1, 640)
@@ -114,6 +112,13 @@ def reiniciar_jogo():
     alien2_speed= 2
     posição_alien2_x = 1350
     posição_alien2_y = random.randint(1, 640)
+
+    velocidade_meteoro_fogo_x= 0
+    velocidade_meteoro_fogo_y= 0
+
+    meteoro_fogo_speed = 2
+    posição_meteoro_fogo_x = 1350
+    posição_meteoro_fogo_y = random.randint(1, 640)
     
     posição_alien_x = 500
     posição_alien_y = 360
@@ -195,13 +200,13 @@ def colisões():
         return True
     
     if nave_rect.colliderect(alien2_rect) or alien2_rect.x == 60:
-        pontos -=1      
+        pontos =0     
         som_explosao.play()
         screen.blit(explosão, (posição_alien2_x, posição_alien2_y))
         return True
     
     if nave_rect.colliderect(meteoro_fogo_rect) or meteoro_fogo_rect.x == 60:
-        pontos -=1      
+        pontos =0      
         som_explosao.play()
         screen.blit(explosão, (posição_meteoro_fogo_x, posição_meteoro_fogo_y))
         return True
@@ -226,6 +231,7 @@ def colisões():
     
     if pontos >= 10:
         velocidade_pontos=4
+        
     else:
         velocidade_pontos += 0
         return False   
@@ -282,8 +288,8 @@ while rodando:
         pygame.time.wait(2000)
         rodando = False
         pausar_jogo()
-                    
 
+    
 
     #respawn do alien
     if posição_alien_x == 50:
