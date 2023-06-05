@@ -17,7 +17,7 @@ cooldown=0
 
 musica_menu = pygame.mixer.music.load("musicas/Opportunist_Always.mp3")
 musica_jogo = pygame.mixer.music.load("musicas/Orbital_som_fundo.mp3")
-#Músicas de menu e de gameplay
+# Carregando músicas de menu e de gameplay
 
 shoot=pygame.mixer.Sound('musicas/laser.wav')
 #Som do disparo da nave
@@ -200,7 +200,7 @@ def reproduzir_musica_jogo():
 def jogo_principal():
     
     reproduzir_musica_jogo()
-    #Inicar música de fundo quando inicia a gameplay
+    # Reproduzir música de fundo quando inicia a gameplay
 
     game_over_exibindo= False
     rodando= True
@@ -349,10 +349,11 @@ def jogo_principal():
             pygame.time.wait(2000)
             rodando = False
             pygame.mixer.music.stop()
+            # Comando para pausar a música da gameplay
             reiniciar_jogo()
             
             reproduzir_musica_menu()
-            #reiniciar a música do menu quando o retornar 
+            # Reiniciar a música do menu quando o retornar 
             #para ele após o gameover
 
 
@@ -437,7 +438,7 @@ def jogo_principal():
 branco = (255, 255, 255)
 preto = (0, 0, 0)
 
-#Função para reproduzir a música do menu
+# Definindo função para reproduzir a música do menu
 def reproduzir_musica_menu():
     pygame.mixer.music.load('musicas/Opportunist_Always.mp3')
     pygame.mixer.music.play(-1) 
@@ -453,7 +454,7 @@ jogar_rect = jogar.get_rect(center=(x // 2, y // 2))
 sair_rect = sair.get_rect(center=(x // 2, y // 2 + 50))
 
 reproduzir_musica_menu()
-#Iniciando a música do menu
+# Iniciando a música do menu
 
 # Loop principal do menu
 while True:
@@ -467,9 +468,9 @@ while True:
             if jogar_rect.collidepoint(pos):
                 print("Iniciar jogo...")
                 pygame.mixer.music.stop()
-                #Após clicar em iniciar, a função do jogo principal vai iniciar o jogo dentro do loop
+                # Parando a música do menu para que a do jogo possa ser iniciada
                 jogo_principal()
-                
+                 #Após clicar em iniciar, a função do jogo principal vai iniciar o jogo dentro do loop
             elif sair_rect.collidepoint(pos):
                 pygame.quit()
                 sys.exit()
