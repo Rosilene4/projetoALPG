@@ -425,14 +425,14 @@ branco = (255, 255, 255)
 preto = (0, 0, 0)
 
 # Variáveis do menu
-fonte = pygame.font.Font(None, 50)
-titulo = fonte.render("Home Menu", True, branco)
-jogar = fonte.render("Play", True, branco)
-sair = fonte.render("Exit", True, branco)
 
-titulo_rect = titulo.get_rect(center=(x // 2, y // 2 - 50))
+titulo = exibe_mensagem("INVASORES DO ESPAÇO", 50, (255, 255, 255))
+jogar = exibe_mensagem("Iniciar", 50, (255, 255, 255))
+sair = exibe_mensagem("Sair", 50, (255, 255, 255))
+
+titulo_rect = titulo.get_rect(center=(x // 2, y // 3- 70))
 jogar_rect = jogar.get_rect(center=(x // 2, y // 2))
-sair_rect = sair.get_rect(center=(x // 2, y // 2 + 50))
+sair_rect = sair.get_rect(center=(x // 2, y // 2 + 70))
 
 # Loop principal do menu
 while True:
@@ -464,5 +464,3 @@ while True:
 
     # Atualiza a tela
     pygame.display.update()
-
-
