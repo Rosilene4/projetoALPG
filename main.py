@@ -342,6 +342,7 @@ def jogo_principal():
             rodando = False
             reiniciar_jogo()
 
+    
 
         #respawn do alien
         if posição_alien_x == 50:
