@@ -465,4 +465,3 @@ while True:
     # Atualiza a tela
     pygame.display.update()
 
-
