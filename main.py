@@ -41,15 +41,11 @@ missel = pygame.image.load('figuras/missel.png').convert_alpha()
 missel = pygame.transform.scale(missel, (50, 50))
 missel = pygame.transform.rotate(missel, 0)
 
-'''missil_obstaculo = pygame.image.load('imagens_novo_nivel/missil_pequeno.png').convert_alpha()
-missil_obstaculo = pygame.transform.scale(missel, (50, 50))
-missil_obstaculo = pygame.transform.rotate(missel, 0)'''
-
 alien2= pygame.image.load('asteroid_fogo.png').convert_alpha()
-alien2= pygame.transform.scale(alien2, (100,100))
+alien2= pygame.transform.scale(alien2, (50,50))
 
 meteoro_fogo = pygame.image.load('fogo.png').convert_alpha()
-meteoro_fogo = pygame.transform.scale(meteoro_fogo, (100, 100))
+meteoro_fogo = pygame.transform.scale(meteoro_fogo, (60, 60))
 
 explosão = pygame.image.load('explosion.png').convert_alpha()
 explosão = pygame.transform.scale(explosão, (100, 100))
@@ -80,10 +76,6 @@ posição_nave_y = 300
 velocidade_x_missel =0
 posição_x_missel = 200
 posição_y_missel = 300
-
-#posição_missil_obstaculo_x = posição_alien_x
-#posição_missil_obstaculo_y = posição_alien_y
-#velocidade_missil_obstaculo_x = 2
 
 triggered = False
 
@@ -137,9 +129,6 @@ def reiniciar_jogo():
     posição_x_missel = 200
     posição_y_missel = 300
     
-    #posição_missil_obstaculo_x = posição_alien_x
-    #posição_missil_obstaculo_y = posição_alien_y
-    #velocidade_missil_obstaculo_x = 2
     
     triggered = False
     pontos = 4
@@ -272,16 +261,6 @@ def jogo_principal():
             if pontos % 10 == 0:
                 velocidade_pontos +1
             return True
-        '''if missil_obstaculo_rect.colliderect(nave_rect):
-            pontos -=1
-            som_explosao.play()
-            screen.blit(explosão, (posição_nave_x, posição_nave_y))
-            return True'''
-        
-        #if missel_rect.colliderect(alien2_rect):
-        #    pontos = pontos + 1
-        #    som_explosao.play()
-        #    return True
         
         if pontos >= 10:
             velocidade_pontos=4
@@ -464,4 +443,5 @@ while True:
 
     # Atualiza a tela
     pygame.display.update()
+
 
