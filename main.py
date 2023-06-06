@@ -108,7 +108,7 @@ def reiniciar_jogo():
     velocidade_alien2_x= 0
     velocidade_alien2_y= 0
     
-    alien2_speed= 2
+    alien2_speed= 1
     posição_alien2_x = 1350
     posição_alien2_y = random.randint(1, 640)
 
@@ -335,20 +335,20 @@ def jogo_principal():
 
 
         #respawn do alien
-        if posição_alien_x == 50:
+        if posição_alien_x == 30:
             posição_alien_x = respawn()[0]
             posição_alien_y = respawn()[1]
 
         # Alien 2
-        if posição_alien2_x == 50:
+        if posição_alien2_x == 30:
             posição_alien2_x= 1350
             posição_alien2_y= random.randint(1, 640)
         posição_alien2_x -=3
 
-        if posição_meteoro_fogo_x == 50:
+        if posição_meteoro_fogo_x == 30:
             posição_meteoro_fogo_x = 1350
             posição_meteoro_fogo_y = random.randint(1, 640)
-        posição_meteoro_fogo_x -=3
+        posição_meteoro_fogo_x -=2
 
         alien2_rect= screen.blit(alien2, (posição_alien2_x, posição_alien2_y))
         meteoro_fogo_rect = screen.blit(meteoro_fogo, (posição_meteoro_fogo_x, posição_meteoro_fogo_y))
@@ -370,7 +370,7 @@ def jogo_principal():
         meteoro_fogo_rect.x = posição_meteoro_fogo_x
         meteoro_fogo_rect.y = posição_meteoro_fogo_y
 
-        posição_alien2_x -= 2
+        posição_alien2_x -= 1
         posição_meteoro_fogo_x -= 1
 
         #desenhar foguete
@@ -464,6 +464,5 @@ while True:
 
     # Atualiza a tela
     pygame.display.update()
-
 
 
