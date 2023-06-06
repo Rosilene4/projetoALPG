@@ -17,7 +17,7 @@ cooldown=0
 
 musica_menu = pygame.mixer.music.load("musicas/Opportunist_Always.mp3")
 musica_jogo = pygame.mixer.music.load("musicas/Orbital_som_fundo.mp3")
-# Carregando músicas de menu e de gameplay
+#Músicas de menu e de gameplay
 
 shoot=pygame.mixer.Sound('musicas/laser.wav')
 #Som do disparo da nave
@@ -40,10 +40,6 @@ nave = pygame.transform.rotate(nave, -90)
 missel = pygame.image.load('figuras/missel.png').convert_alpha()
 missel = pygame.transform.scale(missel, (50, 50))
 missel = pygame.transform.rotate(missel, 0)
-
-'''missil_obstaculo = pygame.image.load('imagens_novo_nivel/missil_pequeno.png').convert_alpha()
-missil_obstaculo = pygame.transform.scale(missel, (50, 50))
-missil_obstaculo = pygame.transform.rotate(missel, 0)'''
 
 alien2= pygame.image.load('asteroid_fogo.png').convert_alpha()
 alien2= pygame.transform.scale(alien2, (100,100))
@@ -80,10 +76,6 @@ posição_nave_y = 300
 velocidade_x_missel =0
 posição_x_missel = 200
 posição_y_missel = 300
-
-#posição_missil_obstaculo_x = posição_alien_x
-#posição_missil_obstaculo_y = posição_alien_y
-#velocidade_missil_obstaculo_x = 2
 
 triggered = False
 
@@ -136,10 +128,6 @@ def reiniciar_jogo():
     velocidade_x_missel =0
     posição_x_missel = 200
     posição_y_missel = 300
-    
-    #posição_missil_obstaculo_x = posição_alien_x
-    #posição_missil_obstaculo_y = posição_alien_y
-    #velocidade_missil_obstaculo_x = 2
     
     triggered = False
     pontos = 4
@@ -200,7 +188,7 @@ def reproduzir_musica_jogo():
 def jogo_principal():
     
     reproduzir_musica_jogo()
-    # Reproduzir música de fundo quando inicia a gameplay
+    #Inicar música de fundo quando inicia a gameplay
 
     game_over_exibindo= False
     rodando= True
@@ -280,16 +268,6 @@ def jogo_principal():
             if pontos % 10 == 0:
                 velocidade_pontos +1
             return True
-        '''if missil_obstaculo_rect.colliderect(nave_rect):
-            pontos -=1
-            som_explosao.play()
-            screen.blit(explosão, (posição_nave_x, posição_nave_y))
-            return True'''
-        
-        #if missel_rect.colliderect(alien2_rect):
-        #    pontos = pontos + 1
-        #    som_explosao.play()
-        #    return True
         
         if pontos >= 10:
             velocidade_pontos=4
@@ -349,11 +327,10 @@ def jogo_principal():
             pygame.time.wait(2000)
             rodando = False
             pygame.mixer.music.stop()
-            # Comando para pausar a música da gameplay
             reiniciar_jogo()
             
             reproduzir_musica_menu()
-            # Reiniciar a música do menu quando o retornar 
+            #reiniciar a música do menu quando o retornar 
             #para ele após o gameover
 
 
@@ -438,14 +415,14 @@ def jogo_principal():
 branco = (255, 255, 255)
 preto = (0, 0, 0)
 
-# Definindo função para reproduzir a música do menu
+#Função para reproduzir a música do menu
 def reproduzir_musica_menu():
     pygame.mixer.music.load('musicas/Opportunist_Always.mp3')
     pygame.mixer.music.play(-1) 
     
 # Variáveis do menu
 fonte = pygame.font.Font(None, 50)
-titulo = fonte.render("Home Menu", True, branco)
+titulo = fonte.render("HOME MENU", True, branco)
 jogar = fonte.render("Play", True, branco)
 sair = fonte.render("Exit", True, branco)
 
@@ -454,7 +431,7 @@ jogar_rect = jogar.get_rect(center=(x // 2, y // 2))
 sair_rect = sair.get_rect(center=(x // 2, y // 2 + 50))
 
 reproduzir_musica_menu()
-# Iniciando a música do menu
+#Iniciando a música do menu
 
 # Loop principal do menu
 while True:
@@ -468,9 +445,9 @@ while True:
             if jogar_rect.collidepoint(pos):
                 print("Iniciar jogo...")
                 pygame.mixer.music.stop()
-                # Parando a música do menu para que a do jogo possa ser iniciada
+                #Após clicar em iniciar, a função do jogo principal vai iniciar o jogo dentro do loop
                 jogo_principal()
-                 #Após clicar em iniciar, a função do jogo principal vai iniciar o jogo dentro do loop
+                
             elif sair_rect.collidepoint(pos):
                 pygame.quit()
                 sys.exit()
@@ -487,5 +464,6 @@ while True:
 
     # Atualiza a tela
     pygame.display.update()
+
 
 
